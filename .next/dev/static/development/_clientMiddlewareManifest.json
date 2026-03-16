@@ -1,0 +1,14 @@
+[
+  {
+    "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/new-checkin(\\\\.json)?[\\/#\\?]?$",
+    "originalSource": "/new-checkin"
+  },
+  {
+    "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/dashboard(\\\\.json)?[\\/#\\?]?$",
+    "originalSource": "/dashboard"
+  },
+  {
+    "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/safe-confirmation(\\\\.json)?[\\/#\\?]?$",
+    "originalSource": "/safe-confirmation"
+  }
+]

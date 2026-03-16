@@ -1,0 +1,709 @@
+[00:00:01.615] Server  LOG     
+[00:00:01.615] Server  LOG       We detected TypeScript in your project and reconfigured your tsconfig.json file for you.
+[00:00:01.615] Server  LOG       The following suggested values were added to your tsconfig.json. These values can be changed to fit your project's needs:
+
+[00:00:01.616] Server  LOG       	- include was updated to add '.next/dev/types/**/*.ts'
+[00:00:01.616] Server  LOG     
+[00:00:01.616] Server  LOG       The following mandatory changes were made to your tsconfig.json:
+
+[00:00:01.616] Server  LOG       	- jsx was set to react-jsx (next.js uses the React automatic runtime)
+[00:00:01.616] Server  LOG     
+[00:00:01.628] Server  WARN    ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+[00:00:01.672] Server  LOG     ✓ Ready in 1554ms
+[00:00:46.462] Server  ERROR   ⨯ ./app/layout.tsx:7:114
+Parsing ecmascript source code failed
+   5 |   title: 'Safe the Date! — Personal Safety Check-In',
+   6 |   description:
+>  7 |     'A personal safety check-in tool. Set a return deadline and emergency contacts — we notify them if you don't check in on time.',
+     |                                                                                                                  ^
+   8 | }
+   9 |
+  10 | export default function RootLayout({ children }: { children: React.ReactNode }) {
+
+Expected ',', got 'ident'
+
+
+
+./app/page.tsx:13:43
+Parsing ecmascript source code failed
+  11 |       icon: '📝',
+  12 |       title: 'Fill in your details',
+> 13 |       desc: 'Enter your location, who you're with, and when you expect to return.',
+     |                                           ^^
+  14 |     },
+  15 |     {
+  16 |       icon: '📧',
+
+Expected ',', got 'ident'
+
+
+[00:00:46.951] Browser ERROR   uncaughtError: Error: ./app/layout.tsx:7:114
+Parsing ecmascript source code failed
+   5 |   title: 'Safe the Date! — Personal Safety Check-In',
+   6 |   description:
+>  7 |     'A personal safety check-in tool. Set a return deadline and emergency contacts — we notify them if you don't check in on time.',
+     |                                                                                                                  ^
+   8 | }
+   9 |
+  10 | export default function RootLayout({ children }: { children: React.ReactNode }) {
+
+Expected ',', got 'ident'
+
+
+[00:00:47.133] Browser ERROR   ./app/layout.tsx:7:114
+Parsing ecmascript source code failed
+   5 |   title: 'Safe the Date! — Personal Safety Check-In',
+   6 |   description:
+>  7 |     'A personal safety check-in tool. Set a return deadline and emergency contacts — we notify them if you don't check in on time.',
+     |                                                                                                                  ^
+   8 | }
+   9 |
+  10 | export default function RootLayout({ children }: { children: React.ReactNode }) {
+
+Expected ',', got 'ident'
+[00:00:47.133] Browser ERROR   ./app/page.tsx:13:43
+Parsing ecmascript source code failed
+  11 |       icon: '📝',
+  12 |       title: 'Fill in your details',
+> 13 |       desc: 'Enter your location, who you're with, and when you expect to return.',
+     |                                           ^^
+  14 |     },
+  15 |     {
+  16 |       icon: '📧',
+
+Expected ',', got 'ident'
+[00:00:47.133] Browser ERROR   ./app/layout.tsx:7:114
+Parsing ecmascript source code failed
+   5 |   title: 'Safe the Date! — Personal Safety Check-In',
+   6 |   description:
+>  7 |     'A personal safety check-in tool. Set a return deadline and emergency contacts — we notify them if you don't check in on time.',
+     |                                                                                                                  ^
+   8 | }
+   9 |
+  10 | export default function RootLayout({ children }: { children: React.ReactNode }) {
+
+Expected ',', got 'ident'
+[00:00:47.133] Browser ERROR   ./app/page.tsx:13:43
+Parsing ecmascript source code failed
+  11 |       icon: '📝',
+  12 |       title: 'Fill in your details',
+> 13 |       desc: 'Enter your location, who you're with, and when you expect to return.',
+     |                                           ^^
+  14 |     },
+  15 |     {
+  16 |       icon: '📧',
+
+Expected ',', got 'ident'
+[00:00:57.583] Browser ERROR   ./app/layout.tsx:7:114
+Parsing ecmascript source code failed
+   5 |   title: 'Safe the Date! — Personal Safety Check-In',
+   6 |   description:
+>  7 |     'A personal safety check-in tool. Set a return deadline and emergency contacts — we notify them if you don't check in on time.',
+     |                                                                                                                  ^
+   8 | }
+   9 |
+  10 | export default function RootLayout({ children }: { children: React.ReactNode }) {
+
+Expected ',', got 'ident'
+[00:00:57.583] Browser ERROR   ./app/page.tsx:13:43
+Parsing ecmascript source code failed
+  11 |       icon: '📝',
+  12 |       title: 'Fill in your details',
+> 13 |       desc: 'Enter your location, who you're with, and when you expect to return.',
+     |                                           ^^
+  14 |     },
+  15 |     {
+  16 |       icon: '📧',
+
+Expected ',', got 'ident'
+[00:02:52.243] Server  ERROR   ⨯ ./app/layout.tsx:7:114
+Parsing ecmascript source code failed
+   5 |   title: 'Safe the Date! — Personal Safety Check-In',
+   6 |   description:
+>  7 |     'A personal safety check-in tool. Set a return deadline and emergency contacts — we notify them if you don't check in on time.',
+     |                                                                                                                  ^
+   8 | }
+   9 |
+  10 | export default function RootLayout({ children }: { children: React.ReactNode }) {
+
+Expected ',', got 'ident'
+
+
+
+./app/page.tsx:13:43
+Parsing ecmascript source code failed
+  11 |       icon: '📝',
+  12 |       title: 'Fill in your details',
+> 13 |       desc: 'Enter your location, who you're with, and when you expect to return.',
+     |                                           ^^
+  14 |     },
+  15 |     {
+  16 |       icon: '📧',
+
+Expected ',', got 'ident'
+
+
+[00:02:52.327] Browser ERROR   uncaughtError: Error: ./app/layout.tsx:7:114
+Parsing ecmascript source code failed
+   5 |   title: 'Safe the Date! — Personal Safety Check-In',
+   6 |   description:
+>  7 |     'A personal safety check-in tool. Set a return deadline and emergency contacts — we notify them if you don't check in on time.',
+     |                                                                                                                  ^
+   8 | }
+   9 |
+  10 | export default function RootLayout({ children }: { children: React.ReactNode }) {
+
+Expected ',', got 'ident'
+
+
+[00:02:52.464] Browser ERROR   ./app/layout.tsx:7:114
+Parsing ecmascript source code failed
+   5 |   title: 'Safe the Date! — Personal Safety Check-In',
+   6 |   description:
+>  7 |     'A personal safety check-in tool. Set a return deadline and emergency contacts — we notify them if you don't check in on time.',
+     |                                                                                                                  ^
+   8 | }
+   9 |
+  10 | export default function RootLayout({ children }: { children: React.ReactNode }) {
+
+Expected ',', got 'ident'
+[00:02:52.464] Browser ERROR   ./app/page.tsx:13:43
+Parsing ecmascript source code failed
+  11 |       icon: '📝',
+  12 |       title: 'Fill in your details',
+> 13 |       desc: 'Enter your location, who you're with, and when you expect to return.',
+     |                                           ^^
+  14 |     },
+  15 |     {
+  16 |       icon: '📧',
+
+Expected ',', got 'ident'
+[00:02:52.464] Browser ERROR   ./app/layout.tsx:7:114
+Parsing ecmascript source code failed
+   5 |   title: 'Safe the Date! — Personal Safety Check-In',
+   6 |   description:
+>  7 |     'A personal safety check-in tool. Set a return deadline and emergency contacts — we notify them if you don't check in on time.',
+     |                                                                                                                  ^
+   8 | }
+   9 |
+  10 | export default function RootLayout({ children }: { children: React.ReactNode }) {
+
+Expected ',', got 'ident'
+[00:02:52.464] Browser ERROR   ./app/page.tsx:13:43
+Parsing ecmascript source code failed
+  11 |       icon: '📝',
+  12 |       title: 'Fill in your details',
+> 13 |       desc: 'Enter your location, who you're with, and when you expect to return.',
+     |                                           ^^
+  14 |     },
+  15 |     {
+  16 |       icon: '📧',
+
+Expected ',', got 'ident'
+[00:02:53.311] Server  ERROR   ⨯ ./app/layout.tsx:7:114
+Parsing ecmascript source code failed
+   5 |   title: 'Safe the Date! — Personal Safety Check-In',
+   6 |   description:
+>  7 |     'A personal safety check-in tool. Set a return deadline and emergency contacts — we notify them if you don't check in on time.',
+     |                                                                                                                  ^
+   8 | }
+   9 |
+  10 | export default function RootLayout({ children }: { children: React.ReactNode }) {
+
+Expected ',', got 'ident'
+
+
+
+./app/page.tsx:13:43
+Parsing ecmascript source code failed
+  11 |       icon: '📝',
+  12 |       title: 'Fill in your details',
+> 13 |       desc: 'Enter your location, who you're with, and when you expect to return.',
+     |                                           ^^
+  14 |     },
+  15 |     {
+  16 |       icon: '📧',
+
+Expected ',', got 'ident'
+
+
+[00:02:53.373] Browser ERROR   uncaughtError: Error: ./app/layout.tsx:7:114
+Parsing ecmascript source code failed
+   5 |   title: 'Safe the Date! — Personal Safety Check-In',
+   6 |   description:
+>  7 |     'A personal safety check-in tool. Set a return deadline and emergency contacts — we notify them if you don't check in on time.',
+     |                                                                                                                  ^
+   8 | }
+   9 |
+  10 | export default function RootLayout({ children }: { children: React.ReactNode }) {
+
+Expected ',', got 'ident'
+
+
+[00:02:53.512] Browser ERROR   ./app/layout.tsx:7:114
+Parsing ecmascript source code failed
+   5 |   title: 'Safe the Date! — Personal Safety Check-In',
+   6 |   description:
+>  7 |     'A personal safety check-in tool. Set a return deadline and emergency contacts — we notify them if you don't check in on time.',
+     |                                                                                                                  ^
+   8 | }
+   9 |
+  10 | export default function RootLayout({ children }: { children: React.ReactNode }) {
+
+Expected ',', got 'ident'
+[00:02:53.512] Browser ERROR   ./app/page.tsx:13:43
+Parsing ecmascript source code failed
+  11 |       icon: '📝',
+  12 |       title: 'Fill in your details',
+> 13 |       desc: 'Enter your location, who you're with, and when you expect to return.',
+     |                                           ^^
+  14 |     },
+  15 |     {
+  16 |       icon: '📧',
+
+Expected ',', got 'ident'
+[00:02:53.512] Browser ERROR   ./app/layout.tsx:7:114
+Parsing ecmascript source code failed
+   5 |   title: 'Safe the Date! — Personal Safety Check-In',
+   6 |   description:
+>  7 |     'A personal safety check-in tool. Set a return deadline and emergency contacts — we notify them if you don't check in on time.',
+     |                                                                                                                  ^
+   8 | }
+   9 |
+  10 | export default function RootLayout({ children }: { children: React.ReactNode }) {
+
+Expected ',', got 'ident'
+[00:02:53.512] Browser ERROR   ./app/page.tsx:13:43
+Parsing ecmascript source code failed
+  11 |       icon: '📝',
+  12 |       title: 'Fill in your details',
+> 13 |       desc: 'Enter your location, who you're with, and when you expect to return.',
+     |                                           ^^
+  14 |     },
+  15 |     {
+  16 |       icon: '📧',
+
+Expected ',', got 'ident'
+[00:05:07.133] Server  ERROR   ⨯ ./app/layout.tsx:7:114
+Parsing ecmascript source code failed
+   5 |   title: 'Safe the Date! — Personal Safety Check-In',
+   6 |   description:
+>  7 |     'A personal safety check-in tool. Set a return deadline and emergency contacts — we notify them if you don't check in on time.',
+     |                                                                                                                  ^
+   8 | }
+   9 |
+  10 | export default function RootLayout({ children }: { children: React.ReactNode }) {
+
+Expected ',', got 'ident'
+
+
+
+./app/page.tsx:13:43
+Parsing ecmascript source code failed
+  11 |       icon: '📝',
+  12 |       title: 'Fill in your details',
+> 13 |       desc: 'Enter your location, who you're with, and when you expect to return.',
+     |                                           ^^
+  14 |     },
+  15 |     {
+  16 |       icon: '📧',
+
+Expected ',', got 'ident'
+
+
+[00:05:07.215] Browser ERROR   uncaughtError: Error: ./app/layout.tsx:7:114
+Parsing ecmascript source code failed
+   5 |   title: 'Safe the Date! — Personal Safety Check-In',
+   6 |   description:
+>  7 |     'A personal safety check-in tool. Set a return deadline and emergency contacts — we notify them if you don't check in on time.',
+     |                                                                                                                  ^
+   8 | }
+   9 |
+  10 | export default function RootLayout({ children }: { children: React.ReactNode }) {
+
+Expected ',', got 'ident'
+
+
+[00:05:07.351] Browser ERROR   ./app/layout.tsx:7:114
+Parsing ecmascript source code failed
+   5 |   title: 'Safe the Date! — Personal Safety Check-In',
+   6 |   description:
+>  7 |     'A personal safety check-in tool. Set a return deadline and emergency contacts — we notify them if you don't check in on time.',
+     |                                                                                                                  ^
+   8 | }
+   9 |
+  10 | export default function RootLayout({ children }: { children: React.ReactNode }) {
+
+Expected ',', got 'ident'
+[00:05:07.351] Browser ERROR   ./app/page.tsx:13:43
+Parsing ecmascript source code failed
+  11 |       icon: '📝',
+  12 |       title: 'Fill in your details',
+> 13 |       desc: 'Enter your location, who you're with, and when you expect to return.',
+     |                                           ^^
+  14 |     },
+  15 |     {
+  16 |       icon: '📧',
+
+Expected ',', got 'ident'
+[00:05:07.351] Browser ERROR   ./app/layout.tsx:7:114
+Parsing ecmascript source code failed
+   5 |   title: 'Safe the Date! — Personal Safety Check-In',
+   6 |   description:
+>  7 |     'A personal safety check-in tool. Set a return deadline and emergency contacts — we notify them if you don't check in on time.',
+     |                                                                                                                  ^
+   8 | }
+   9 |
+  10 | export default function RootLayout({ children }: { children: React.ReactNode }) {
+
+Expected ',', got 'ident'
+[00:05:07.351] Browser ERROR   ./app/page.tsx:13:43
+Parsing ecmascript source code failed
+  11 |       icon: '📝',
+  12 |       title: 'Fill in your details',
+> 13 |       desc: 'Enter your location, who you're with, and when you expect to return.',
+     |                                           ^^
+  14 |     },
+  15 |     {
+  16 |       icon: '📧',
+
+Expected ',', got 'ident'
+[00:05:07.731] Server  ERROR   ⨯ ./app/layout.tsx:7:114
+Parsing ecmascript source code failed
+   5 |   title: 'Safe the Date! — Personal Safety Check-In',
+   6 |   description:
+>  7 |     'A personal safety check-in tool. Set a return deadline and emergency contacts — we notify them if you don't check in on time.',
+     |                                                                                                                  ^
+   8 | }
+   9 |
+  10 | export default function RootLayout({ children }: { children: React.ReactNode }) {
+
+Expected ',', got 'ident'
+
+
+
+./app/page.tsx:13:43
+Parsing ecmascript source code failed
+  11 |       icon: '📝',
+  12 |       title: 'Fill in your details',
+> 13 |       desc: 'Enter your location, who you're with, and when you expect to return.',
+     |                                           ^^
+  14 |     },
+  15 |     {
+  16 |       icon: '📧',
+
+Expected ',', got 'ident'
+
+
+[00:05:07.800] Browser ERROR   uncaughtError: Error: ./app/layout.tsx:7:114
+Parsing ecmascript source code failed
+   5 |   title: 'Safe the Date! — Personal Safety Check-In',
+   6 |   description:
+>  7 |     'A personal safety check-in tool. Set a return deadline and emergency contacts — we notify them if you don't check in on time.',
+     |                                                                                                                  ^
+   8 | }
+   9 |
+  10 | export default function RootLayout({ children }: { children: React.ReactNode }) {
+
+Expected ',', got 'ident'
+
+
+[00:05:07.941] Browser ERROR   ./app/layout.tsx:7:114
+Parsing ecmascript source code failed
+   5 |   title: 'Safe the Date! — Personal Safety Check-In',
+   6 |   description:
+>  7 |     'A personal safety check-in tool. Set a return deadline and emergency contacts — we notify them if you don't check in on time.',
+     |                                                                                                                  ^
+   8 | }
+   9 |
+  10 | export default function RootLayout({ children }: { children: React.ReactNode }) {
+
+Expected ',', got 'ident'
+[00:05:07.941] Browser ERROR   ./app/page.tsx:13:43
+Parsing ecmascript source code failed
+  11 |       icon: '📝',
+  12 |       title: 'Fill in your details',
+> 13 |       desc: 'Enter your location, who you're with, and when you expect to return.',
+     |                                           ^^
+  14 |     },
+  15 |     {
+  16 |       icon: '📧',
+
+Expected ',', got 'ident'
+[00:05:07.941] Browser ERROR   ./app/layout.tsx:7:114
+Parsing ecmascript source code failed
+   5 |   title: 'Safe the Date! — Personal Safety Check-In',
+   6 |   description:
+>  7 |     'A personal safety check-in tool. Set a return deadline and emergency contacts — we notify them if you don't check in on time.',
+     |                                                                                                                  ^
+   8 | }
+   9 |
+  10 | export default function RootLayout({ children }: { children: React.ReactNode }) {
+
+Expected ',', got 'ident'
+[00:05:07.941] Browser ERROR   ./app/page.tsx:13:43
+Parsing ecmascript source code failed
+  11 |       icon: '📝',
+  12 |       title: 'Fill in your details',
+> 13 |       desc: 'Enter your location, who you're with, and when you expect to return.',
+     |                                           ^^
+  14 |     },
+  15 |     {
+  16 |       icon: '📧',
+
+Expected ',', got 'ident'
+[00:05:08.914] Server  ERROR   ⨯ ./app/layout.tsx:7:114
+Parsing ecmascript source code failed
+   5 |   title: 'Safe the Date! — Personal Safety Check-In',
+   6 |   description:
+>  7 |     'A personal safety check-in tool. Set a return deadline and emergency contacts — we notify them if you don't check in on time.',
+     |                                                                                                                  ^
+   8 | }
+   9 |
+  10 | export default function RootLayout({ children }: { children: React.ReactNode }) {
+
+Expected ',', got 'ident'
+
+
+
+./app/page.tsx:13:43
+Parsing ecmascript source code failed
+  11 |       icon: '📝',
+  12 |       title: 'Fill in your details',
+> 13 |       desc: 'Enter your location, who you're with, and when you expect to return.',
+     |                                           ^^
+  14 |     },
+  15 |     {
+  16 |       icon: '📧',
+
+Expected ',', got 'ident'
+
+
+[00:05:08.991] Browser ERROR   uncaughtError: Error: ./app/layout.tsx:7:114
+Parsing ecmascript source code failed
+   5 |   title: 'Safe the Date! — Personal Safety Check-In',
+   6 |   description:
+>  7 |     'A personal safety check-in tool. Set a return deadline and emergency contacts — we notify them if you don't check in on time.',
+     |                                                                                                                  ^
+   8 | }
+   9 |
+  10 | export default function RootLayout({ children }: { children: React.ReactNode }) {
+
+Expected ',', got 'ident'
+
+
+[00:05:09.130] Browser ERROR   ./app/layout.tsx:7:114
+Parsing ecmascript source code failed
+   5 |   title: 'Safe the Date! — Personal Safety Check-In',
+   6 |   description:
+>  7 |     'A personal safety check-in tool. Set a return deadline and emergency contacts — we notify them if you don't check in on time.',
+     |                                                                                                                  ^
+   8 | }
+   9 |
+  10 | export default function RootLayout({ children }: { children: React.ReactNode }) {
+
+Expected ',', got 'ident'
+[00:05:09.130] Browser ERROR   ./app/page.tsx:13:43
+Parsing ecmascript source code failed
+  11 |       icon: '📝',
+  12 |       title: 'Fill in your details',
+> 13 |       desc: 'Enter your location, who you're with, and when you expect to return.',
+     |                                           ^^
+  14 |     },
+  15 |     {
+  16 |       icon: '📧',
+
+Expected ',', got 'ident'
+[00:05:09.130] Browser ERROR   ./app/layout.tsx:7:114
+Parsing ecmascript source code failed
+   5 |   title: 'Safe the Date! — Personal Safety Check-In',
+   6 |   description:
+>  7 |     'A personal safety check-in tool. Set a return deadline and emergency contacts — we notify them if you don't check in on time.',
+     |                                                                                                                  ^
+   8 | }
+   9 |
+  10 | export default function RootLayout({ children }: { children: React.ReactNode }) {
+
+Expected ',', got 'ident'
+[00:05:09.130] Browser ERROR   ./app/page.tsx:13:43
+Parsing ecmascript source code failed
+  11 |       icon: '📝',
+  12 |       title: 'Fill in your details',
+> 13 |       desc: 'Enter your location, who you're with, and when you expect to return.',
+     |                                           ^^
+  14 |     },
+  15 |     {
+  16 |       icon: '📧',
+
+Expected ',', got 'ident'
+[00:05:13.265] Server  ERROR   ⨯ ./app/layout.tsx:7:114
+Parsing ecmascript source code failed
+   5 |   title: 'Safe the Date! — Personal Safety Check-In',
+   6 |   description:
+>  7 |     'A personal safety check-in tool. Set a return deadline and emergency contacts — we notify them if you don't check in on time.',
+     |                                                                                                                  ^
+   8 | }
+   9 |
+  10 | export default function RootLayout({ children }: { children: React.ReactNode }) {
+
+Expected ',', got 'ident'
+
+
+
+./app/page.tsx:13:43
+Parsing ecmascript source code failed
+  11 |       icon: '📝',
+  12 |       title: 'Fill in your details',
+> 13 |       desc: 'Enter your location, who you're with, and when you expect to return.',
+     |                                           ^^
+  14 |     },
+  15 |     {
+  16 |       icon: '📧',
+
+Expected ',', got 'ident'
+
+
+[00:05:13.362] Browser ERROR   uncaughtError: Error: ./app/layout.tsx:7:114
+Parsing ecmascript source code failed
+   5 |   title: 'Safe the Date! — Personal Safety Check-In',
+   6 |   description:
+>  7 |     'A personal safety check-in tool. Set a return deadline and emergency contacts — we notify them if you don't check in on time.',
+     |                                                                                                                  ^
+   8 | }
+   9 |
+  10 | export default function RootLayout({ children }: { children: React.ReactNode }) {
+
+Expected ',', got 'ident'
+
+
+[00:05:13.526] Browser ERROR   ./app/layout.tsx:7:114
+Parsing ecmascript source code failed
+   5 |   title: 'Safe the Date! — Personal Safety Check-In',
+   6 |   description:
+>  7 |     'A personal safety check-in tool. Set a return deadline and emergency contacts — we notify them if you don't check in on time.',
+     |                                                                                                                  ^
+   8 | }
+   9 |
+  10 | export default function RootLayout({ children }: { children: React.ReactNode }) {
+
+Expected ',', got 'ident'
+[00:05:13.526] Browser ERROR   ./app/page.tsx:13:43
+Parsing ecmascript source code failed
+  11 |       icon: '📝',
+  12 |       title: 'Fill in your details',
+> 13 |       desc: 'Enter your location, who you're with, and when you expect to return.',
+     |                                           ^^
+  14 |     },
+  15 |     {
+  16 |       icon: '📧',
+
+Expected ',', got 'ident'
+[00:05:13.526] Browser ERROR   ./app/layout.tsx:7:114
+Parsing ecmascript source code failed
+   5 |   title: 'Safe the Date! — Personal Safety Check-In',
+   6 |   description:
+>  7 |     'A personal safety check-in tool. Set a return deadline and emergency contacts — we notify them if you don't check in on time.',
+     |                                                                                                                  ^
+   8 | }
+   9 |
+  10 | export default function RootLayout({ children }: { children: React.ReactNode }) {
+
+Expected ',', got 'ident'
+[00:05:13.526] Browser ERROR   ./app/page.tsx:13:43
+Parsing ecmascript source code failed
+  11 |       icon: '📝',
+  12 |       title: 'Fill in your details',
+> 13 |       desc: 'Enter your location, who you're with, and when you expect to return.',
+     |                                           ^^
+  14 |     },
+  15 |     {
+  16 |       icon: '📧',
+
+Expected ',', got 'ident'
+[00:05:43.629] Browser ERROR   ./app/layout.tsx:7:114
+Parsing ecmascript source code failed
+   5 |   title: 'Safe the Date! — Personal Safety Check-In',
+   6 |   description:
+>  7 |     'A personal safety check-in tool. Set a return deadline and emergency contacts — we notify them if you don't check in on time.',
+     |                                                                                                                  ^
+   8 | }
+   9 |
+  10 | export default function RootLayout({ children }: { children: React.ReactNode }) {
+
+Expected ',', got 'ident'
+[00:05:43.629] Browser ERROR   ./app/page.tsx:18:73
+Parsing ecmascript source code failed
+  16 |       icon: '📧',
+  17 |       title: 'Add emergency contacts',
+> 18 |       desc: 'Add 1–3 trusted people who should be notified if you don't check in.',
+     |                                                                         ^
+  19 |     },
+  20 |     {
+  21 |       icon: '✅',
+
+Expected ',', got 'ident'
+[00:05:49.766] Browser ERROR   ./app/layout.tsx:9:8
+Parsing ecmascript source code failed
+   7 |     "A personal safety check-in tool. Set a return deadline and emergency contacts — we notify them if you don't check in on time.",
+   8 |
+>  9 | export default function RootLayout({ children }: { children: React.ReactNode }) {
+     |        ^^^^^^^
+  10 |   return (
+  11 |     <html lang="en">
+  12 |       <body className="min-h-screen bg-gradient-to-br from-rose-50 via-pink-50 to-fuchsia-50">
+
+Unexpected token `default`. Expected ... , *,  (, [, :, , ?, =, an identifier, public, protected, private, readonly, <.
+[00:05:49.766] Browser ERROR   ./app/page.tsx:18:73
+Parsing ecmascript source code failed
+  16 |       icon: '📧',
+  17 |       title: 'Add emergency contacts',
+> 18 |       desc: 'Add 1–3 trusted people who should be notified if you don't check in.',
+     |                                                                         ^
+  19 |     },
+  20 |     {
+  21 |       icon: '✅',
+
+Expected ',', got 'ident'
+[00:07:57.768] Browser ERROR   ./app/page.tsx:18:73
+Parsing ecmascript source code failed
+  16 |       icon: '📧',
+  17 |       title: 'Add emergency contacts',
+> 18 |       desc: 'Add 1–3 trusted people who should be notified if you don't check in.',
+     |                                                                         ^
+  19 |     },
+  20 |     {
+  21 |       icon: '✅',
+
+Expected ',', got 'ident'
+[00:08:33.920] Browser ERROR   ./app/page.tsx:22:32
+Parsing ecmascript source code failed
+  20 |     {
+  21 |       icon: '✅',
+> 22 |       title: 'Confirm when you're safe',
+     |                                ^^
+  23 |       desc: 'Tap "I returned safely" before the deadline and the session closes quietly.',
+  24 |     },
+  25 |     {
+
+Expected ',', got 'ident'
+[00:08:58.312] Browser ERROR   ./app/page.tsx:27:42
+Parsing ecmascript source code failed
+  25 |     {
+  26 |       icon: '🚨',
+> 27 |       title: 'Automatic alert if you don't',
+     |                                          ^
+  28 |       desc: 'If the deadline passes with no confirmation, your contacts receive an email.',
+  29 |     },
+  30 |   ]
+
+Expected ',', got 'ident'
+[00:09:46.344] Server  LOG     ✓ Compiled in 97ms
+[00:09:46.498] Server  WARN    Error: Route "/" used `cookies().get`. `cookies()` returns a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+[00:09:46.503] Server  ERROR   ⨯ TypeError: cookieStore.get is not a function
+[00:09:46.641] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:09:46.642] Browser ERROR   uncaughtError: TypeError: cookieStore.get is not a function
+[00:09:57.153] Server  WARN    Error: Route "/" used `cookies().get`. `cookies()` returns a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+[00:09:57.161] Server  ERROR   ⨯ TypeError: cookieStore.get is not a function
+[00:09:57.243] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:09:57.243] Browser ERROR   uncaughtError: TypeError: cookieStore.get is not a function
+[00:10:20.241] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
