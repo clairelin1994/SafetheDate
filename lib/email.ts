@@ -44,13 +44,17 @@ export async function sendAlertEmail(params: AlertEmailParams): Promise<void> {
 
           <!-- Header -->
           <tr>
-            <td style="background:linear-gradient(135deg,#FF6B9D 0%,#ff8fab 50%,#ffb3c6 100%);padding:36px 40px 32px;">
+            <td style="background:#ffffff;padding:24px 40px;border-bottom:1px solid #fce7f3;">
               <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                   <td>
-                    <div style="font-size:28px;margin-bottom:6px;">🌸</div>
-                    <h1 style="margin:0;color:#ffffff;font-size:26px;font-weight:800;letter-spacing:-0.5px;">Safe the Date</h1>
-                    <p style="margin:6px 0 0;color:#ffe4ee;font-size:14px;font-weight:500;letter-spacing:0.3px;">SAFETY CHECK ALERT</p>
+                    <table cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td style="font-size:24px;line-height:1;padding-right:10px;">🌸</td>
+                        <td style="font-size:20px;font-weight:700;color:#1f2937;letter-spacing:-0.3px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">Safe the Date</td>
+                      </tr>
+                    </table>
+                    <p style="margin:8px 0 0;font-size:13px;font-weight:600;color:#FF6B9D;letter-spacing:0.5px;text-transform:uppercase;">Safety Check Alert</p>
                   </td>
                 </tr>
               </table>
