@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Safe the Date! — Personal Safety Check-In',
+  title: 'Safe the Date — Personal Safety Check-In',
   description: "A personal safety check-in tool. Set a return deadline and emergency contacts — we notify them if you don't check in on time.",
 }
 

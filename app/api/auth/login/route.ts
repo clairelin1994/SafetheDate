@@ -1,41 +1,34 @@
 import { NextRequest, NextResponse } from 'next/server'
 import pool from '@/lib/db'
-import { signToken, cookieOptions } from '@/lib/auth'
+import { sendOtpEmail } from '@/lib/email'
 import { loginSchema } from '@/utils/validation'
+
+function generateOtp(): string {
+  return String(Math.floor(100000 + Math.random() * 900000))
+}
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
     const parsed = loginSchema.safeParse(body)
-
     if (!parsed.success) {
       return NextResponse.json(
         { error: parsed.error.errors[0].message },
         { status: 400 },
       )
     }
-
     const { email } = parsed.data
+    const code = generateOtp()
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000)
 
-    // Find or create user
-    const result = await pool.query<{ id: number; email: string }>(
-      `INSERT INTO users (email)
-       VALUES ($1)
-       ON CONFLICT (email) DO UPDATE SET email = EXCLUDED.email
-       RETURNING id, email`,
-      [email],
+    await pool.query(
+      `INSERT INTO otp_codes (email, code, expires_at) VALUES ($1, $2, $3)`,
+      [email, code, expiresAt],
     )
 
-    const user = result.rows[0]
-    const token = signToken({ userId: user.id, email: user.email })
+    await sendOtpEmail(email, code)
 
-    const response = NextResponse.json({ ok: true })
-    response.cookies.set({
-      ...cookieOptions,
-      value: token,
-    })
-
-    return response
+    return NextResponse.json({ sent: true })
   } catch (err) {
     console.error('[POST /api/auth/login]', err)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })

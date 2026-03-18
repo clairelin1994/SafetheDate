@@ -6,6 +6,7 @@ import Header from '@/components/Header'
 import CountdownTimer from '@/components/CountdownTimer'
 import DisclaimerBanner from '@/components/DisclaimerBanner'
 import SafeButton from './SafeButton'
+import DeadlineLabel from '@/components/DeadlineLabel'
 
 interface Session {
   id: number
@@ -39,12 +40,13 @@ export default async function DashboardPage() {
   const user = await getAuthUser()
   if (!user) redirect('/login')
 
-  const session = await getActiveSession(user.userId)
+  const displayName = user.name || user.email
+  const session = await getActiveSession(Number(user.userId))
 
   if (!session) {
     return (
       <div className="min-h-screen flex flex-col">
-        <Header userEmail={user.email} />
+        <Header userDisplay={displayName} />
         <main className="flex-1 max-w-2xl mx-auto w-full px-4 py-16 text-center">
           <div className="text-6xl mb-4">🌸</div>
           <h1 className="text-2xl font-bold text-gray-800 mb-2">No active check-in</h1>
@@ -57,20 +59,12 @@ export default async function DashboardPage() {
     )
   }
 
-  const deadline = new Date(session.deadline).toLocaleString('en-US', {
-    weekday: 'short',
-    month: 'short',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  })
-
   return (
     <div className="min-h-screen flex flex-col">
-      <Header userEmail={user.email} />
+      <Header userDisplay={displayName} />
 
       <main className="flex-1 max-w-2xl mx-auto w-full px-4 py-10">
-        {/* Status badge */}
+        {/* Welcome + status badge */}
         <div className="flex items-center gap-2 mb-6">
           <span className="inline-flex items-center gap-1.5 bg-green-100 text-green-700 text-sm font-medium px-3 py-1 rounded-full">
             <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
@@ -78,11 +72,18 @@ export default async function DashboardPage() {
           </span>
         </div>
 
+        <div className="mb-6">
+          <h1 className="text-2xl font-bold text-gray-800">
+            Hi, {user.name || user.email.split('@')[0]} 👋
+          </h1>
+          <p className="text-gray-500 text-sm mt-1">Here&apos;s your active check-in.</p>
+        </div>
+
         {/* Countdown */}
         <div className="card text-center mb-6 py-10">
           <CountdownTimer deadline={session.deadline} />
           <p className="text-sm text-gray-400 mt-4">
-            Deadline: <span className="text-gray-600 font-medium">{deadline}</span>
+            Deadline: <span className="text-gray-600 font-medium"><DeadlineLabel deadline={session.deadline} /></span>
           </p>
         </div>
 

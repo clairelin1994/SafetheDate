@@ -4,20 +4,18 @@ import { getAuthUser } from '@/lib/auth'
 
 export async function PATCH(
   _req: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
+    const { id } = await params
     const user = await getAuthUser()
     if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
-
-    const sessionId = parseInt(params.id, 10)
+    const sessionId = parseInt(id, 10)
     if (isNaN(sessionId)) {
       return NextResponse.json({ error: 'Invalid session id' }, { status: 400 })
     }
-
-    // Verify the session belongs to the authenticated user and is still active
     const result = await pool.query(
       `UPDATE sessions
        SET status = 'completed'
@@ -25,14 +23,12 @@ export async function PATCH(
        RETURNING id`,
       [sessionId, user.userId],
     )
-
     if (result.rowCount === 0) {
       return NextResponse.json(
         { error: 'Session not found or already closed.' },
         { status: 404 },
       )
     }
-
     return NextResponse.json({ ok: true })
   } catch (err) {
     console.error('[PATCH /api/checkins/[id]/safe]', err)

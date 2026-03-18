@@ -4,6 +4,7 @@ import { sendAlertEmail } from '@/lib/email'
 
 interface OverdueRow {
   session_id: number
+  user_name: string | null
   user_email: string
   location: string | null
   with_whom: string | null
@@ -24,6 +25,7 @@ export async function GET(req: NextRequest) {
     const result = await pool.query<OverdueRow>(`
       SELECT
         s.id           AS session_id,
+        u.name         AS user_name,
         u.email        AS user_email,
         s.location,
         s.with_whom,
@@ -67,6 +69,7 @@ export async function GET(req: NextRequest) {
         emailPromises.push(
           sendAlertEmail({
             to: contactEmail,
+            userName: session.user_name,
             userEmail: session.user_email,
             location: session.location,
             withWhom: session.with_whom,

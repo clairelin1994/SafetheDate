@@ -40,7 +40,7 @@ export default async function HomePage() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Header userEmail={user?.email} />
+      <Header userDisplay={user ? (user.name || user.email) : undefined} />
 
       <main className="flex-1">
         {/* Hero */}
@@ -112,7 +112,7 @@ export default async function HomePage() {
       </main>
 
       <footer className="text-center text-sm text-gray-400 py-6 border-t border-pink-100 bg-white">
-        Safe the Date! · A personal reminder tool, not an emergency service
+        Safe the Date · A personal reminder tool, not an emergency service
       </footer>
     </div>
   )

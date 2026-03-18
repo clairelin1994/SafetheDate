@@ -1,20 +1,35 @@
-import jwt from 'jsonwebtoken'
+import { SignJWT, jwtVerify } from 'jose'
 import { cookies } from 'next/headers'
 
-const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret-key'
+const getSecret = () =>
+  new TextEncoder().encode(process.env.JWT_SECRET || 'dev-secret-key')
 
 export interface JWTPayload {
   userId: string
   email: string
+  name?: string | null
 }
 
-export function signToken(payload: JWTPayload): string {
-  return jwt.sign(payload, JWT_SECRET, { expiresIn: '7d' })
+export const cookieOptions = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: 'lax' as const,
+  maxAge: 60 * 60 * 24 * 7,
+  path: '/',
 }
 
-export function verifyToken(token: string): JWTPayload | null {
+export async function signToken(payload: JWTPayload): Promise<string> {
+  return new SignJWT(payload as unknown as Record<string, unknown>)
+    .setProtectedHeader({ alg: 'HS256' })
+    .setExpirationTime('7d')
+    .sign(getSecret())
+
+}
+
+export async function verifyToken(token: string): Promise<JWTPayload | null> {
   try {
-    return jwt.verify(token, JWT_SECRET) as JWTPayload
+    const { payload } = await jwtVerify(token, getSecret())
+    return payload as unknown as JWTPayload
   } catch {
     return null
   }

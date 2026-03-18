@@ -4,10 +4,11 @@ import { getAuthUser } from '@/lib/auth'
 
 export default async function SafeConfirmationPage() {
   const user = await getAuthUser()
+  const displayName = user ? (user.name || user.email) : undefined
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Header userEmail={user?.email} />
+      <Header userDisplay={displayName} />
 
       <main className="flex-1 flex items-center justify-center px-4">
         <div className="text-center max-w-md">

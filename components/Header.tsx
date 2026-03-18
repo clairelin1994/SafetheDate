@@ -4,10 +4,10 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 interface HeaderProps {
-  userEmail?: string
+  userDisplay?: string
 }
 
-export default function Header({ userEmail }: HeaderProps) {
+export default function Header({ userDisplay }: HeaderProps) {
   const router = useRouter()
 
   async function handleLogout() {
@@ -22,14 +22,14 @@ export default function Header({ userEmail }: HeaderProps) {
         <Link href="/" className="flex items-center gap-2">
           <span className="text-2xl">🌸</span>
           <span className="font-semibold text-gray-800 text-lg tracking-tight">
-            Safe the Date!
+            Safe the Date
           </span>
         </Link>
 
         <nav className="flex items-center gap-4">
-          {userEmail ? (
+          {userDisplay ? (
             <>
-              <span className="text-sm text-gray-500 hidden sm:block">{userEmail}</span>
+              <span className="text-sm text-gray-500 hidden sm:block">{userDisplay}</span>
               <button
                 onClick={handleLogout}
                 className="text-sm text-pink-500 hover:text-pink-700 transition-colors"
