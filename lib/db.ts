@@ -25,4 +25,9 @@ if (process.env.NODE_ENV !== 'production') {
   globalThis._pgPool = pool
 }
 
+// Idempotent migration: add name column if it doesn't exist yet
+pool.query('ALTER TABLE users ADD COLUMN IF NOT EXISTS name TEXT').catch((err) => {
+  console.error('[db] migration error:', err)
+})
+
 export default pool
