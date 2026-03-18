@@ -3,7 +3,7 @@ import { Resend } from 'resend'
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 // Update this to your verified sending domain in Resend
-const FROM_ADDRESS = 'onboarding@resend.dev'
+const FROM_ADDRESS = 'Safe the Date <noreply@safethedate.net>'
 
 interface AlertEmailParams {
   to: string
