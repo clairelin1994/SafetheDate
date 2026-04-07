@@ -1,8 +1,9 @@
 {
+  "regions": ["iad1"],
   "crons": [
     {
       "path": "/api/cron/check-overdue",
-      "schedule": "* * * * *"
+      "schedule": "0 0 * * *"
     }
   ]
 }

@@ -25,7 +25,7 @@ export default async function HomePage() {
     {
       icon: '🚨',
       title: 'Automatic alert if you do not',
-      desc: 'If the deadline passes with no confirmation, your contacts receive an email.',
+      desc: 'If the deadline passes with no confirmation, your contacts receive an email. All data is automatically deleted after 30 days — no traces, no worries.',
     },
   ]
 
@@ -46,15 +46,18 @@ export default async function HomePage() {
         {/* Hero */}
         <section className="max-w-3xl mx-auto px-4 pt-16 pb-12 text-center">
           <div className="inline-flex items-center gap-2 bg-pink-100 text-pink-700 text-sm font-medium px-4 py-1.5 rounded-full mb-6">
-            <span>🌸</span> Free personal safety tool
+            <span>🌸</span> Free to try · Premium from $3.99/mo
           </div>
           <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-4">
             Stay safe. <span className="text-pink-500">Let someone know.</span>
           </h1>
           <p className="text-lg text-gray-600 max-w-xl mx-auto mb-8 leading-relaxed">
             Before a date, night run, or any moment that feels uncertain — set a check-in. If you
-            don't confirm you are safe by your deadline, your trusted contacts are automatically
-            notified.
+            don&apos;t confirm you&apos;re safe, your trusted contacts are quietly notified. No
+            accounts, no data stored. Just a gentle nudge to the people who care about you. 🌸{' '}
+            <Link href="/terms" className="text-pink-400 hover:text-pink-500 text-base underline-offset-2 hover:underline transition-colors">
+              Terms apply.
+            </Link>
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -113,6 +116,11 @@ export default async function HomePage() {
 
       <footer className="text-center text-sm text-gray-400 py-6 border-t border-pink-100 bg-white">
         Safe the Date · A personal reminder tool, not an emergency service
+        <div className="mt-1">© 2026 Safe the Date. All rights reserved.</div>
+        <div className="mt-1 flex justify-center gap-4">
+          <a href="/privacy" className="hover:text-pink-400 transition-colors">Privacy Policy</a>
+          <a href="/support" className="hover:text-pink-400 transition-colors">Support</a>
+        </div>
       </footer>
     </div>
   )

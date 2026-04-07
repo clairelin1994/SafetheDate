@@ -87,8 +87,27 @@ export async function GET(req: NextRequest) {
 
     await Promise.all(emailPromises)
 
-    console.log(`[cron] Processed ${sessionIds.length} overdue session(s)`)
-    return NextResponse.json({ processed: sessionIds.length })
+    // Delete contacts and sessions older than 30 days with terminal statuses
+    const cleanupResult = await pool.query(`
+      WITH expired_sessions AS (
+        SELECT id FROM sessions
+        WHERE status IN ('completed', 'alert_sent')
+          AND deadline < NOW() - INTERVAL '30 days'
+      )
+      DELETE FROM contacts
+      WHERE session_id IN (SELECT id FROM expired_sessions)
+    `)
+    const deletedContacts = cleanupResult.rowCount ?? 0
+
+    const sessionCleanupResult = await pool.query(`
+      DELETE FROM sessions
+      WHERE status IN ('completed', 'alert_sent')
+        AND deadline < NOW() - INTERVAL '30 days'
+    `)
+    const deletedSessions = sessionCleanupResult.rowCount ?? 0
+
+    console.log(`[cron] Processed ${sessionIds.length} overdue session(s); deleted ${deletedSessions} expired session(s) and ${deletedContacts} contact(s)`)
+    return NextResponse.json({ processed: sessionIds.length, deletedSessions, deletedContacts })
   } catch (err) {
     console.error('[cron] check-overdue error:', err)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })

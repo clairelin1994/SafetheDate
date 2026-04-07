@@ -30,6 +30,7 @@ export default function NewCheckinForm({ userDisplay }: Props) {
   const [form, setForm] = useState<FormState>(initialForm)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [rateLimited, setRateLimited] = useState(false)
 
   function set(field: keyof FormState, value: string) {
     setForm((prev) => ({ ...prev, [field]: value }))
@@ -68,6 +69,7 @@ export default function NewCheckinForm({ userDisplay }: Props) {
     }
 
     setLoading(true)
+    setRateLimited(false)
     try {
       const res = await fetch('/api/checkins', {
         method: 'POST',
@@ -84,7 +86,11 @@ export default function NewCheckinForm({ userDisplay }: Props) {
       const data = await res.json()
 
       if (!res.ok) {
-        setError(data.error || 'Failed to create check-in.')
+        if (res.status === 429) {
+          setRateLimited(true)
+        } else {
+          setError(data.error || 'Failed to create check-in.')
+        }
         return
       }
 
@@ -235,13 +241,25 @@ export default function NewCheckinForm({ userDisplay }: Props) {
             )}
           </div>
 
+          {rateLimited && (
+            <div className="bg-pink-50 border border-pink-200 rounded-xl px-5 py-4 text-center">
+              <p className="text-2xl mb-2">🌸</p>
+              <p className="font-semibold text-pink-700 text-base mb-1">
+                You've used your free check-in this week.
+              </p>
+              <p className="text-pink-600 text-sm">
+                Download the <strong>Safe the Date</strong> app for unlimited check-ins!
+              </p>
+            </div>
+          )}
+
           {error && (
             <div className="bg-rose-50 border border-rose-200 rounded-xl px-4 py-3 text-rose-600 text-sm">
               {error}
             </div>
           )}
 
-          <button type="submit" disabled={loading} className="btn-primary w-full text-base py-4">
+          <button type="submit" disabled={loading || rateLimited} className="btn-primary w-full text-base py-4">
             {loading ? 'Creating check-in…' : '🌸 Start Check-in'}
           </button>
         </form>

@@ -1,5 +1,5 @@
 import { SignJWT, jwtVerify } from 'jose'
-import { cookies } from 'next/headers'
+import { cookies, headers } from 'next/headers'
 
 const getSecret = () =>
   new TextEncoder().encode(process.env.JWT_SECRET || 'dev-secret-key')
@@ -36,6 +36,15 @@ export async function verifyToken(token: string): Promise<JWTPayload | null> {
 }
 
 export async function getAuthUser(): Promise<JWTPayload | null> {
+  // Check Authorization: Bearer <token> header first (used by mobile clients)
+  const headerStore = await headers()
+  const authorization = headerStore.get('authorization')
+  if (authorization?.startsWith('Bearer ')) {
+    const token = authorization.slice(7)
+    return verifyToken(token)
+  }
+
+  // Fall back to cookie (used by web clients)
   const cookieStore = await cookies()
   const token = cookieStore.get('auth_token')?.value
   if (!token) return null
