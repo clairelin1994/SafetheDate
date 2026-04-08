@@ -30,7 +30,6 @@ export async function POST(req: NextRequest) {
         audience: 'com.safethedate.app',
       })
       appleSub = payload.sub as string
-      console.log('[apple auth] appleSub:', appleSub)
       appleEmail = payload.email as string | undefined
     } catch {
       return NextResponse.json({ error: 'Invalid Apple token.' }, { status: 401 })
