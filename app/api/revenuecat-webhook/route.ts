@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
     // 2. Parse the event
     const body = (await req.json()) as RCWebhookEvent
     const event = body?.event
-    if (!event || !event.type || !event.app_user_id) {
+   if (!event || !event.type) {
       console.error('[RC webhook] Malformed event body:', JSON.stringify(body).slice(0, 500))
       return NextResponse.json({ error: 'Malformed event' }, { status: 400 })
     }
