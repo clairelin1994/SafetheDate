@@ -45,7 +45,11 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json()
+    console.log('[checkins POST] body received:', JSON.stringify(body))
     const parsed = checkinSchema.safeParse(body)
+    if (!parsed.success) {
+      console.log('[checkins POST] validation failed:', JSON.stringify(parsed.error.errors))
+    }
 
     if (!parsed.success) {
       return NextResponse.json(
