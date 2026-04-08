@@ -26,12 +26,4 @@ if (process.env.NODE_ENV !== 'production') {
   globalThis._pgPool = pool
 }
 
-// Idempotent migrations
-pool.query('ALTER TABLE users ADD COLUMN IF NOT EXISTS name TEXT').catch((err) => {
-  console.error('[db] migration error (name):', err)
-})
-pool.query('ALTER TABLE users ADD COLUMN IF NOT EXISTS last_checkin_at TIMESTAMPTZ').catch((err) => {
-  console.error('[db] migration error (last_checkin_at):', err)
-})
-
 export default pool
