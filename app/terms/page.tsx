@@ -33,6 +33,17 @@ export default function TermsPage() {
           </div>
 
           <div className="card">
+            <h2 className="text-lg font-semibold text-gray-800 mb-3">App and website accounts</h2>
+            <p className="text-gray-600 text-sm leading-relaxed">
+              The iOS app and this website are separate platforms with independent accounts — signing
+              up on one does not create an account on the other. Website users get one free check-in
+              every 7 days; there is no paid upgrade option on the website. App users can subscribe
+              to Safe the Date Premium ($3.99/month) via Apple In-App Purchase, which is governed by
+              Apple&apos;s payment terms.
+            </p>
+          </div>
+
+          <div className="card">
             <h2 className="text-lg font-semibold text-gray-800 mb-3">Your responsibilities</h2>
             <ul className="space-y-2 text-sm text-gray-600">
               <li className="flex gap-2">
