@@ -78,6 +78,26 @@ export default async function HomePage() {
           </div>
         </section>
 
+        {/* iOS App Banner */}
+        <section className="max-w-3xl mx-auto px-4 pb-8">
+          <div className="bg-white border border-pink-200 rounded-2xl px-6 py-5 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 shadow-sm">
+            <div className="flex-1">
+              <p className="text-sm font-bold text-gray-800 mb-1">Also available as an iOS app 📱</p>
+              <p className="text-xs text-gray-500 leading-relaxed">
+                Web and app accounts are separate. The app includes Premium unlimited check-ins via Apple In-App Purchase.
+              </p>
+            </div>
+            <a
+              href="https://apps.apple.com/app/id6761162406"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-shrink-0 inline-flex items-center justify-center bg-gray-900 hover:bg-gray-700 text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-colors whitespace-nowrap"
+            >
+              Download on App Store →
+            </a>
+          </div>
+        </section>
+
         {/* Use cases */}
         <section className="max-w-3xl mx-auto px-4 pb-12">
           <div className="flex flex-wrap justify-center gap-3">
