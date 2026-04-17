@@ -65,6 +65,20 @@ export async function POST(req: NextRequest) {
       expiration_at_ms: event.expiration_at_ms,
       environment: event.environment,
     })
+    // 2.5 Idempotency check — skip if we've already processed this event
+const eventId = `${event.type}-${event.app_user_id}-${event.expiration_at_ms ?? event.purchased_at_ms}`
+const existing = await pool.query(
+  'SELECT id FROM webhook_events WHERE id = $1',
+  [eventId]
+)
+if (existing.rows.length > 0) {
+  console.log('[RC webhook] duplicate event, skipping:', eventId)
+  return NextResponse.json({ ok: true, duplicate: true })
+}
+await pool.query(
+  'INSERT INTO webhook_events (id, event_type) VALUES ($1, $2)',
+  [eventId, event.type]
+)
 
     // 3. Look up the user. The iOS app calls Purchases.logIn(userId) with the
     //    numeric user.id from our database, so app_user_id should be a string
