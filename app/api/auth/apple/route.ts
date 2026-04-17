@@ -3,6 +3,7 @@ import { createRemoteJWKSet, jwtVerify } from 'jose'
 import pool from '@/lib/db'
 import { signToken, cookieOptions } from '@/lib/auth'
 import { z } from 'zod'
+import { ratelimit } from '@/lib/ratelimit'
 
 const APPLE_JWKS = createRemoteJWKSet(new URL('https://appleid.apple.com/auth/keys'))
 
@@ -12,6 +13,12 @@ const schema = z.object({
 
 export async function POST(req: NextRequest) {
   try {
+    // Rate limiting
+const ip = req.headers.get('x-forwarded-for') ?? 'anonymous'
+const { success } = await ratelimit.limit(ip)
+if (!success) {
+  return NextResponse.json({ error: 'Too many requests' }, { status: 429 })
+}
     const body = await req.json()
     const parsed = schema.safeParse(body)
     if (!parsed.success) {

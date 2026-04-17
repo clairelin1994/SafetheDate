@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import pool from '@/lib/db'
 import { getAuthUser } from '@/lib/auth'
 import { checkinSchema } from '@/utils/validation'
+import { ratelimit } from '@/lib/ratelimit'
 
 export const maxDuration = 30
 
@@ -39,6 +40,12 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   try {
+    // Rate limiting
+const ip = req.headers.get('x-forwarded-for') ?? 'anonymous'
+const { success } = await ratelimit.limit(ip)
+if (!success) {
+  return NextResponse.json({ error: 'Too many requests' }, { status: 429 })
+}
     const user = await getAuthUser()
     if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
