@@ -8,7 +8,7 @@ declare global {
 
 function createPool(): Pool {
   return new Pool({
-    connectionString: process.env.DATABASE_URL,
+    connectionString: process.env.DATABASE_URL + '?sslmode=verify-full',
     ssl:
       process.env.NODE_ENV === 'production'
         ? { rejectUnauthorized: false }
