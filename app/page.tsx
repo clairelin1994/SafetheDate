@@ -46,8 +46,8 @@ export default async function HomePage() {
         {/* Hero */}
         <section className="max-w-3xl mx-auto px-4 pt-16 pb-12 text-center">
           <div className="inline-flex items-center gap-2 bg-pink-100 text-pink-700 text-sm font-medium px-4 py-1.5 rounded-full mb-6">
-            <span>🌸</span> Free to try · Premium from $3.99/mo
-          </div>
+  <span>🌸</span> Free to use on web · Premium plan available on iOS
+</div>
           <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-4">
             Stay safe. <span className="text-pink-500">Let someone know.</span>
           </h1>
@@ -82,10 +82,10 @@ export default async function HomePage() {
         <section className="max-w-3xl mx-auto px-4 pb-8">
           <div className="bg-white border border-pink-200 rounded-2xl px-6 py-5 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 shadow-sm">
             <div className="flex-1">
-              <p className="text-sm font-bold text-gray-800 mb-1">Also available as an iOS app 📱</p>
-              <p className="text-xs text-gray-500 leading-relaxed">
-                Web and app accounts are separate. The app includes Premium unlimited check-ins via Apple In-App Purchase.
-              </p>
+             <p className="text-sm font-bold text-gray-800 mb-1">Want the full experience? Get the iOS app 📱</p>
+<p className="text-xs text-gray-500 leading-relaxed">
+  The website is free to use with email login. The iOS app signs in with Apple and unlocks Premium — unlimited check-ins, notifications, journal, and saved contacts for $3.99/mo. Two separate accounts, one mission.
+</p>
             </div>
             <a
               href="https://apps.apple.com/app/id6761162406"
@@ -133,7 +133,12 @@ export default async function HomePage() {
           <DisclaimerBanner />
         </section>
       </main>
-
+{/* Made by a girl for girls */}
+<section className="max-w-3xl mx-auto px-4 pb-16 text-center">
+  <p className="text-sm text-gray-400 leading-relaxed">
+    💌 Safe the Date was made by a girl, for all the girls out there — because every woman deserves a quiet safety net, no matter where she goes.
+  </p>
+</section>
       <footer className="text-center text-sm text-gray-400 py-6 border-t border-pink-100 bg-white">
         Safe the Date · A personal reminder tool, not an emergency service
         <div className="mt-1">© 2026 Safe the Date. All rights reserved.</div>
