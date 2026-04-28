@@ -136,7 +136,8 @@ export default async function HomePage() {
 {/* Made by a girl for girls */}
 <section className="max-w-3xl mx-auto px-4 pb-16 text-center">
   <p className="text-sm text-gray-400 leading-relaxed">
-    💌 Safe the Date was made by a girl, for all the girls out there — because every woman deserves a quiet safety net, no matter where she goes.
+    💌 Safe the Date was made by a girl, for all the girls out there — because every woman deserves a quiet safety net, no matter where she goes.{' '}
+<a href="https://www.tiktok.com/@safethedateapp" target="_blank" rel="noopener noreferrer" className="text-pink-400 hover:text-pink-500 transition-colors">Follow along on TikTok →</a>
   </p>
 </section>
       <footer className="text-center text-sm text-gray-400 py-6 border-t border-pink-100 bg-white">
