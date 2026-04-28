@@ -14,14 +14,16 @@ interface OverdueRow {
 }
 
 export async function GET(req: NextRequest) {
-  // Verify the request comes from Vercel's cron runner (or an authorized caller)
   const authHeader = req.headers.get('authorization')
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
+  console.log('[cron] check-overdue started')
+
   try {
-    // Fetch all overdue active sessions along with their contacts in one query
+    // Fetch all overdue active sessions where alert has not been sent yet
+    // 60-min lookback window to catch any sessions missed by previous cron runs
     const result = await pool.query<OverdueRow>(`
       SELECT
         s.id           AS session_id,
@@ -37,7 +39,11 @@ export async function GET(req: NextRequest) {
       JOIN contacts c ON c.session_id = s.id
       WHERE s.status = 'active'
         AND s.deadline < NOW()
+        AND s.deadline > NOW() - INTERVAL '60 minutes'
+        AND s.alert_email_sent = false
     `)
+
+    console.log(`[cron] overdue records found: ${result.rows.length}`)
 
     if (result.rows.length === 0) {
       return NextResponse.json({ processed: 0 })
@@ -54,15 +60,21 @@ export async function GET(req: NextRequest) {
 
     const sessionIds = [...sessionMap.keys()]
 
-    // Mark sessions as alert_sent before sending emails to avoid duplicate sends
-    // on concurrent cron invocations
+    // Mark alert_email_sent = true immediately to prevent duplicate sends
+    // on concurrent cron invocations (idempotency guard)
     await pool.query(
-      `UPDATE sessions SET status = 'alert_sent'
-       WHERE id = ANY($1::int[]) AND status = 'active'`,
+      `UPDATE sessions
+       SET status = 'alert_sent',
+           alert_email_sent = true,
+           alert_email_sent_at = NOW(),
+           alert_send_status = 'pending'
+       WHERE id = ANY($1::int[])
+         AND status = 'active'
+         AND alert_email_sent = false`,
       [sessionIds],
     )
 
-    // Send emails (fire and forget individual failures — log them but don't abort)
+    // Send emails
     const emailPromises: Promise<void>[] = []
     for (const session of sessionMap.values()) {
       for (const contactEmail of session.contactEmails) {
@@ -75,19 +87,39 @@ export async function GET(req: NextRequest) {
             withWhom: session.with_whom,
             activityDescription: session.activity_description,
             deadline: new Date(session.deadline),
-          }).catch((err) => {
-            console.error(
-              `[cron] Failed to send alert email to ${contactEmail} for session ${session.session_id}:`,
-              err,
-            )
-          }),
+          })
+            .then(() => {
+              console.log(`[cron] email sent OK → ${contactEmail} (session ${session.session_id})`)
+            })
+            .catch(async (err) => {
+              console.error(`[cron] email FAILED → ${contactEmail} (session ${session.session_id}):`, err)
+              // Update status to failed for this session
+              await pool.query(
+                `UPDATE sessions
+                 SET alert_send_status = 'failed',
+                     alert_send_error = $1
+                 WHERE id = $2`,
+                [String(err), session.session_id],
+              ).catch((dbErr) => console.error('[cron] DB update error after email failure:', dbErr))
+            }),
         )
       }
     }
 
     await Promise.all(emailPromises)
 
-    // Delete contacts and sessions older than 30 days with terminal statuses
+    // Mark successful sessions
+    await pool.query(
+      `UPDATE sessions
+       SET alert_send_status = 'success'
+       WHERE id = ANY($1::int[])
+         AND alert_send_status = 'pending'`,
+      [sessionIds],
+    )
+
+    console.log(`[cron] DB updated — ${sessionIds.length} session(s) marked alert_sent`)
+
+    // Cleanup expired sessions older than 30 days
     const cleanupResult = await pool.query(`
       WITH expired_sessions AS (
         SELECT id FROM sessions
@@ -106,7 +138,8 @@ export async function GET(req: NextRequest) {
     `)
     const deletedSessions = sessionCleanupResult.rowCount ?? 0
 
-    console.log(`[cron] Processed ${sessionIds.length} overdue session(s); deleted ${deletedSessions} expired session(s) and ${deletedContacts} contact(s)`)
+    console.log(`[cron] cleanup done — deleted ${deletedSessions} session(s), ${deletedContacts} contact(s)`)
+
     return NextResponse.json({ processed: sessionIds.length, deletedSessions, deletedContacts })
   } catch (err) {
     console.error('[cron] check-overdue error:', err)
