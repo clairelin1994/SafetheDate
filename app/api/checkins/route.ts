@@ -110,7 +110,8 @@ if (!success) {
 
       const sessionId = sessionResult.rows[0].id
 
-      for (const email of emergencyContacts) {
+      const trimmedContacts = isPremiumActive ? emergencyContacts.slice(0, 3) : emergencyContacts.slice(0, 1)
+for (const email of trimmedContacts) {
         await client.query(
           `INSERT INTO contacts (session_id, email) VALUES ($1, $2)`,
           [sessionId, email],
