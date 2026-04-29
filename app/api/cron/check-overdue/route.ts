@@ -1,3 +1,4 @@
+export const maxDuration = 60
 import { NextRequest, NextResponse } from 'next/server'
 import pool from '@/lib/db'
 import { sendAlertEmail } from '@/lib/email'

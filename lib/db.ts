@@ -16,7 +16,7 @@ function createPool(): Pool {
     max: 10,
     idleTimeoutMillis: 30_000,
     // Increased to 20s to handle Neon cold-start wake-up latency (can exceed 5s)
-    connectionTimeoutMillis: 20_000,
+    connectionTimeoutMillis: 10_000,
   })
 }
 
