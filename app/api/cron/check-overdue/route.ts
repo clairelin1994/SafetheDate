@@ -12,6 +12,7 @@ interface OverdueRow {
   activity_description: string | null
   deadline: Date
   contact_email: string
+  timezone: string | null
 }
 
 export async function GET(req: NextRequest) {
@@ -34,6 +35,7 @@ export async function GET(req: NextRequest) {
         s.with_whom,
         s.activity_description,
         s.deadline,
+        s.timezone,
         c.email        AS contact_email
       FROM sessions s
       JOIN users    u ON u.id = s.user_id
@@ -88,6 +90,7 @@ export async function GET(req: NextRequest) {
             withWhom: session.with_whom,
             activityDescription: session.activity_description,
             deadline: new Date(session.deadline),
+            timezone: session.timezone,
           })
             .then(() => {
               console.log(`[cron] email sent OK → ${contactEmail} (session ${session.session_id})`)

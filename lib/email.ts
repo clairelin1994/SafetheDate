@@ -13,6 +13,7 @@ interface AlertEmailParams {
   withWhom?: string | null
   activityDescription?: string | null
   deadline: Date
+  timezone?: string | null
 }
 
 export async function sendAlertEmail(params: AlertEmailParams): Promise<void> {
@@ -25,7 +26,7 @@ export async function sendAlertEmail(params: AlertEmailParams): Promise<void> {
     location ? `<tr><td style="padding:4px 0;color:#555;"><strong>Location:</strong></td><td style="padding:4px 8px;">${escapeHtml(location)}</td></tr>` : '',
     withWhom ? `<tr><td style="padding:4px 0;color:#555;"><strong>With:</strong></td><td style="padding:4px 8px;">${escapeHtml(withWhom)}</td></tr>` : '',
     activityDescription ? `<tr><td style="padding:4px 0;color:#555;"><strong>Activity:</strong></td><td style="padding:4px 8px;">${escapeHtml(activityDescription)}</td></tr>` : '',
-    `<tr><td style="padding:4px 0;color:#555;"><strong>Expected return:</strong></td><td style="padding:4px 8px;">${deadline.toLocaleString('en-US', { timeZone: 'UTC', weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })} (UTC)</td></tr>`,
+    `<tr><td style="padding:4px 0;color:#555;"><strong>Expected return:</strong></td><td style="padding:4px 8px;">${deadline.toLocaleString('en-US', { timeZone: params.timezone ?? 'UTC', weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })} ${params.timezone ?? 'UTC'}</td></tr>`,
   ].join('')
 
   const { error } = await resend.emails.send({

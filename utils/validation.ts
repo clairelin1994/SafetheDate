@@ -14,10 +14,11 @@ export const checkinSchema = z.object({
     const d = new Date(val)
     return !isNaN(d.getTime()) && d > new Date()
   }, 'Deadline must be a valid future date'),
-  emergencyContacts: z
+ emergencyContacts: z
     .array(emailSchema)
     .min(1, 'At least one emergency contact is required')
     .max(3, 'Maximum 3 emergency contacts'),
+  timezone: z.string().optional(),
 })
 
 export type LoginInput = z.infer<typeof loginSchema>

@@ -61,7 +61,7 @@ if (!success) {
       )
     }
 
-    const { location, withWhom, activityDescription, deadline, emergencyContacts } = parsed.data
+    const { location, withWhom, activityDescription, deadline, emergencyContacts, timezone } = parsed.data
 
     // Enforce 7-day free usage limit (premium users bypass this)
     const limitCheck = await pool.query<{
@@ -102,11 +102,11 @@ if (!success) {
       await client.query('BEGIN')
 
       const sessionResult = await client.query<{ id: number }>(
-        `INSERT INTO sessions (user_id, location, with_whom, activity_description, deadline)
-         VALUES ($1, $2, $3, $4, $5)
-         RETURNING id`,
-        [user.userId, location ?? null, withWhom ?? null, activityDescription ?? null, deadline],
-      )
+  `INSERT INTO sessions (user_id, location, with_whom, activity_description, deadline, timezone)
+   VALUES ($1, $2, $3, $4, $5, $6)
+   RETURNING id`,
+  [user.userId, location ?? null, withWhom ?? null, activityDescription ?? null, deadline, timezone ?? null],
+)
 
       const sessionId = sessionResult.rows[0].id
 
