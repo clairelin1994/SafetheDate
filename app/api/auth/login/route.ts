@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import pool from '@/lib/db'
 import { sendOtpEmail } from '@/lib/email'
 import { loginSchema } from '@/utils/validation'
+import { ratelimit } from '@/lib/ratelimit'
 
 function generateOtp(): string {
   return String(Math.floor(100000 + Math.random() * 900000))
@@ -9,6 +10,11 @@ function generateOtp(): string {
 
 export async function POST(req: NextRequest) {
   try {
+    const ip = req.headers.get('x-forwarded-for') ?? 'anonymous'
+    const { success } = await ratelimit.limit(ip)
+    if (!success) {
+      return NextResponse.json({ error: 'Too many requests' }, { status: 429 })
+    }
     const body = await req.json()
     const parsed = loginSchema.safeParse(body)
     if (!parsed.success) {
