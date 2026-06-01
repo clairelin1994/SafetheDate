@@ -8,6 +8,7 @@ export interface JWTPayload {
   userId: string
   email: string
   name?: string | null
+  appleSub?: string | null
 }
 
 export const cookieOptions = {

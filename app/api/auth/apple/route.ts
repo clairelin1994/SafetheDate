@@ -74,7 +74,7 @@ if (!success) {
     }
 
     const isNewUser = !user.name
-    const token = await signToken({ userId: String(user.id), email: user.email, name: user.name })
+    const token = await signToken({ userId: String(user.id), email: user.email, name: user.name, appleSub })
 
     const response = NextResponse.json({ ok: true, isNewUser, token })
     response.cookies.set('auth_token', token, cookieOptions)
