@@ -65,37 +65,43 @@ export async function POST(req: NextRequest) {
       expiration_at_ms: event.expiration_at_ms,
       environment: event.environment,
     })
-    // 2.5 Idempotency check — skip if we've already processed this event
-const eventId = `${event.type}-${event.app_user_id}-${event.expiration_at_ms ?? event.purchased_at_ms}`
-const existing = await pool.query(
-  'SELECT id FROM webhook_events WHERE id = $1',
-  [eventId]
-)
-if (existing.rows.length > 0) {
-  console.log('[RC webhook] duplicate event, skipping:', eventId)
-  return NextResponse.json({ ok: true, duplicate: true })
-}
-await pool.query(
-  'INSERT INTO webhook_events (id, event_type) VALUES ($1, $2)',
-  [eventId, event.type]
-)
-
-    // 3. Look up the user. The iOS app calls Purchases.logIn(userId) with the
-    //    numeric user.id from our database, so app_user_id should be a string
-    //    representation of users.id.
-    const userIdNum = parseInt(event.app_user_id, 10)
-    if (isNaN(userIdNum)) {
-      console.warn('[RC webhook] app_user_id is not numeric, skipping:', event.app_user_id)
-      // Return 200 so RevenueCat doesn't retry forever for unknown users
-      return NextResponse.json({ ok: true, skipped: 'non-numeric user id' })
+   // 2.5 Build event ID for idempotency (but don't insert yet)
+    const eventId = `${event.type}-${event.app_user_id}-${event.expiration_at_ms ?? event.purchased_at_ms}`
+    const existing = await pool.query(
+      'SELECT id FROM webhook_events WHERE id = $1',
+      [eventId]
+    )
+    if (existing.rows.length > 0) {
+      console.log('[RC webhook] duplicate event, skipping:', eventId)
+      return NextResponse.json({ ok: true, duplicate: true })
     }
 
-    const userCheck = await pool.query<{ id: number }>(
-      'SELECT id FROM users WHERE id = $1',
-      [userIdNum],
+    // 3. Look up user by apple_sub first, then fall back to numeric ID
+    let userId: number | null = null
+
+    const byAppleSub = await pool.query<{ id: number }>(
+      'SELECT id FROM users WHERE apple_sub = $1',
+      [event.app_user_id],
     )
-    if (userCheck.rows.length === 0) {
-      console.warn('[RC webhook] user not found in db, skipping:', userIdNum)
+    if (byAppleSub.rows.length > 0) {
+      userId = byAppleSub.rows[0].id
+      console.log('[RC webhook] matched user by apple_sub:', userId)
+    } else {
+      const userIdNum = parseInt(event.app_user_id, 10)
+      if (!isNaN(userIdNum)) {
+        const byId = await pool.query<{ id: number }>(
+          'SELECT id FROM users WHERE id = $1',
+          [userIdNum],
+        )
+        if (byId.rows.length > 0) {
+          userId = byId.rows[0].id
+          console.log('[RC webhook] matched user by legacy numeric ID:', userId)
+        }
+      }
+    }
+
+    if (!userId) {
+      console.warn('[RC webhook] user not found for app_user_id:', event.app_user_id)
       return NextResponse.json({ ok: true, skipped: 'user not found' })
     }
 
@@ -110,14 +116,10 @@ await pool.query(
       case 'PRODUCT_CHANGE':
       case 'UNCANCELLATION':
       case 'NON_RENEWING_PURCHASE':
-        // User has access. If we know an expiration date, only mark premium
-        // when it's still in the future (defensive check for late-arriving events).
         isPremium = expiresAt ? expiresAt > now : true
         break
 
       case 'CANCELLATION':
-        // CANCELLATION fires when a user turns off auto-renew, but they still
-        // have access until expiration_at_ms. Keep them premium until then.
         isPremium = expiresAt ? expiresAt > now : false
         break
 
@@ -129,8 +131,6 @@ await pool.query(
 
       case 'TRANSFER':
       case 'SUBSCRIBER_ALIAS':
-        // These are identity-management events, not subscription changes.
-        // Don't touch is_premium.
         return NextResponse.json({ ok: true, ignored: event.type })
 
       case 'TEST':
@@ -145,10 +145,16 @@ await pool.query(
     // 5. Update the database
     await pool.query(
       'UPDATE users SET is_premium = $1, premium_expires_at = $2 WHERE id = $3',
-      [isPremium, expiresAt, userIdNum],
+      [isPremium, expiresAt, userId],
+    )
+    console.log('[RC webhook] updated user', userId, '→ is_premium:', isPremium, 'expires:', expiresAt)
+
+    // 6. Only mark event as processed after successful update
+    await pool.query(
+      'INSERT INTO webhook_events (id, event_type) VALUES ($1, $2)',
+      [eventId, event.type]
     )
 
-    console.log('[RC webhook] updated user', userIdNum, '→ is_premium:', isPremium, 'expires:', expiresAt)
     return NextResponse.json({ ok: true })
   } catch (err) {
     const e = err as Error
