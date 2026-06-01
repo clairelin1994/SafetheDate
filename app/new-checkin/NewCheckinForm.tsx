@@ -75,12 +75,13 @@ export default function NewCheckinForm({ userDisplay }: Props) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          location: form.location || undefined,
-          withWhom: form.withWhom || undefined,
-          activityDescription: form.activityDescription || undefined,
-          deadline: new Date(form.deadline).toISOString(),
-          emergencyContacts: filledContacts,
-        }),
+        location: form.location || undefined,
+        withWhom: form.withWhom || undefined,
+        activityDescription: form.activityDescription || undefined,
+        deadline: new Date(form.deadline).toISOString(),
+        emergencyContacts: filledContacts,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+}),
       })
 
       const data = await res.json()

@@ -18,10 +18,17 @@ interface AlertEmailParams {
 
 export async function sendAlertEmail(params: AlertEmailParams): Promise<void> {
   const { to, userName, userEmail, location, withWhom, activityDescription, deadline } = params
+  const displayName = userName
+  ? userName
+  : userEmail.includes('privaterelay.appleid.com')
+    ? 'a Safe the Date user'
+    : userEmail
 
-  const displayName = userName || userEmail
-  const nameWithEmail = userName ? `${escapeHtml(userName)} (${escapeHtml(userEmail)})` : escapeHtml(userEmail)
-
+const nameWithEmail = userName
+  ? escapeHtml(userName)
+  : userEmail.includes('privaterelay.appleid.com')
+    ? 'a Safe the Date user'
+    : escapeHtml(userEmail)
   const detailRows = [
     location ? `<tr><td style="padding:4px 0;color:#555;"><strong>Location:</strong></td><td style="padding:4px 8px;">${escapeHtml(location)}</td></tr>` : '',
     withWhom ? `<tr><td style="padding:4px 0;color:#555;"><strong>With:</strong></td><td style="padding:4px 8px;">${escapeHtml(withWhom)}</td></tr>` : '',
