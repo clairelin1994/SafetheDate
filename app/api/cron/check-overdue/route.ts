@@ -25,7 +25,8 @@ export async function GET(req: NextRequest) {
 
   try {
     // Fetch all overdue active sessions where alert has not been sent yet
-    // 60-min lookback window to catch any sessions missed by previous cron runs
+    // No lookback window — catches ALL missed sessions regardless of how long ago
+    // LIMIT 50 prevents runaway queries if many sessions pile up
     const result = await pool.query<OverdueRow>(`
       SELECT
         s.id           AS session_id,
@@ -42,8 +43,9 @@ export async function GET(req: NextRequest) {
       JOIN contacts c ON c.session_id = s.id
       WHERE s.status = 'active'
         AND s.deadline < NOW()
-        AND s.deadline > NOW() - INTERVAL '60 minutes'
         AND s.alert_email_sent = false
+      ORDER BY s.deadline ASC
+      LIMIT 50
     `)
 
     console.log(`[cron] overdue records found: ${result.rows.length}`)
@@ -63,23 +65,26 @@ export async function GET(req: NextRequest) {
 
     const sessionIds = [...sessionMap.keys()]
 
-    // Mark alert_email_sent = true immediately to prevent duplicate sends
-    // on concurrent cron invocations (idempotency guard)
-    await pool.query(
-      `UPDATE sessions
-       SET status = 'alert_sent',
-           alert_email_sent = true,
-           alert_email_sent_at = NOW(),
-           alert_send_status = 'pending'
-       WHERE id = ANY($1::int[])
-         AND status = 'active'
-         AND alert_email_sent = false`,
-      [sessionIds],
-    )
+// Update only sessions we can atomically claim — RETURNING id prevents
+// duplicate sends if two cron instances run concurrently
+const claimed = await pool.query<{ id: number }>(
+  `UPDATE sessions
+   SET status = 'alert_sent',
+       alert_email_sent = true,
+       alert_email_sent_at = NOW(),
+       alert_send_status = 'pending'
+   WHERE id = ANY($1::int[])
+     AND status = 'active'
+     AND alert_email_sent = false
+   RETURNING id`,
+  [sessionIds],
+)
+const claimedIds = new Set(claimed.rows.map(r => r.id))
 
     // Send emails
     const emailPromises: Promise<void>[] = []
     for (const session of sessionMap.values()) {
+      if (!claimedIds.has(session.session_id)) continue
       for (const contactEmail of session.contactEmails) {
         emailPromises.push(
           sendAlertEmail({
@@ -110,17 +115,15 @@ export async function GET(req: NextRequest) {
       }
     }
 
-    await Promise.all(emailPromises)
-
-    // Mark successful sessions
     await pool.query(
-      `UPDATE sessions
-       SET alert_send_status = 'success'
-       WHERE id = ANY($1::int[])
-         AND alert_send_status = 'pending'`,
-      [sessionIds],
-    )
+  `UPDATE sessions
+   SET alert_send_status = 'success'
+   WHERE id = ANY($1::int[])
+     AND alert_send_status = 'pending'`,
+  [[...claimedIds]],
+)
 
+console.log(`[cron] DB updated — ${claimedIds.size} session(s) marked alert_sent`)
     console.log(`[cron] DB updated — ${sessionIds.length} session(s) marked alert_sent`)
 
     // Cleanup expired sessions older than 30 days
