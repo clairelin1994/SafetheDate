@@ -38,6 +38,8 @@ if (!success) {
       })
       appleSub = payload.sub as string
       appleEmail = payload.email as string | undefined
+      const maskedSub = appleSub ? `${appleSub.slice(0, 6)}...${appleSub.slice(-4)}` : 'none'
+      console.log('[Apple auth] appleSub:', maskedSub, '| email:', appleEmail ? 'present' : 'none')
     } catch {
       return NextResponse.json({ error: 'Invalid Apple token.' }, { status: 401 })
     }
@@ -73,6 +75,7 @@ if (!success) {
       )
     }
 
+    console.log('[Apple auth] matched userId:', user.id, '| is new user:', !user.name)
     const isNewUser = !user.name
     const token = await signToken({ userId: String(user.id), email: user.email, name: user.name, appleSub })
 

@@ -18,6 +18,7 @@ export async function GET() {
       row?.is_premium === true &&
       (!row.premium_expires_at || new Date(row.premium_expires_at) > now)
     const hasAppleSub = !!row?.apple_sub
+    console.log('[auth/me] userId:', user.userId, '| hasAppleSub:', !!user.appleSub, '| isPremium:', isPremium, '| hasAppleSub in db:', hasAppleSub)
 
     return NextResponse.json({ isPremium, hasAppleSub })
   } catch (err) {
