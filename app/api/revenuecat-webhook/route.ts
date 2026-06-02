@@ -29,11 +29,17 @@ interface RCWebhookEvent {
     type: RCEventType
     app_user_id: string
     original_app_user_id?: string
+    aliases?: string[]
     expiration_at_ms?: number | null
     purchased_at_ms?: number
     environment?: 'SANDBOX' | 'PRODUCTION'
   }
   api_version?: string
+}
+
+function maskId(id: string) {
+  if (id.length <= 10) return '[short-id]'
+  return `${id.slice(0, 6)}...${id.slice(-4)}`
 }
 
 export async function POST(req: NextRequest) {
@@ -61,7 +67,7 @@ export async function POST(req: NextRequest) {
 
     console.log('[RC webhook] received event:', {
       type: event.type,
-      app_user_id: event.app_user_id,
+      app_user_id: maskId(event.app_user_id),
       expiration_at_ms: event.expiration_at_ms,
       environment: event.environment,
     })
@@ -76,32 +82,54 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: true, duplicate: true })
     }
 
-    // 3. Look up user by apple_sub first, then fall back to numeric ID
+    // 3. Look up user by all RevenueCat identifiers, then fall back to numeric ID
     let userId: number | null = null
+    const candidateIds = Array.from(new Set([
+      event.app_user_id,
+      event.original_app_user_id,
+      ...(event.aliases ?? []),
+    ].filter((id): id is string => Boolean(id))))
 
-    const byAppleSub = await pool.query<{ id: number }>(
-      'SELECT id FROM users WHERE apple_sub = $1',
-      [event.app_user_id],
+    const byAppleSub = await pool.query<{ id: number; apple_sub: string }>(
+      'SELECT id, apple_sub FROM users WHERE apple_sub = ANY($1::text[])',
+      [candidateIds],
     )
     if (byAppleSub.rows.length > 0) {
       userId = byAppleSub.rows[0].id
-      console.log('[RC webhook] matched user by apple_sub:', userId)
+      const matchedIdentifier = byAppleSub.rows[0].apple_sub
+      const identifierSource =
+        matchedIdentifier === event.app_user_id
+          ? 'app_user_id'
+          : matchedIdentifier === event.original_app_user_id
+            ? 'original_app_user_id'
+            : 'alias'
+      console.log('[RC webhook] matched user by apple_sub:', {
+        userId,
+        identifierSource,
+        matchedIdentifier: maskId(matchedIdentifier),
+      })
     } else {
-      const userIdNum = parseInt(event.app_user_id, 10)
-      if (!isNaN(userIdNum)) {
+      for (const candidateId of candidateIds) {
+        const userIdNum = parseInt(candidateId, 10)
+        if (isNaN(userIdNum)) continue
+
         const byId = await pool.query<{ id: number }>(
           'SELECT id FROM users WHERE id = $1',
           [userIdNum],
         )
         if (byId.rows.length > 0) {
           userId = byId.rows[0].id
-          console.log('[RC webhook] matched user by legacy numeric ID:', userId)
+          console.log('[RC webhook] matched user by legacy numeric ID:', {
+            userId,
+            matchedIdentifier: maskId(candidateId),
+          })
+          break
         }
       }
     }
 
     if (!userId) {
-      console.warn('[RC webhook] user not found for app_user_id:', event.app_user_id)
+      console.warn('[RC webhook] user not found for candidate IDs:', candidateIds.map(maskId))
       return NextResponse.json({ ok: true, skipped: 'user not found' })
     }
 
