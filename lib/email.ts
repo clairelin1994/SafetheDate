@@ -18,11 +18,7 @@ interface AlertEmailParams {
 
 export async function sendAlertEmail(params: AlertEmailParams): Promise<void> {
   const { to, userName, userEmail, location, withWhom, activityDescription, deadline } = params
-  const displayName = userName
-  ? userName
-  : userEmail.includes('privaterelay.appleid.com')
-    ? 'a Safe the Date user'
-    : userEmail
+  const subjectDisplayName = getSubjectDisplayName(userName)
 
 const nameWithEmail = userName
   ? escapeHtml(userName)
@@ -39,7 +35,7 @@ const nameWithEmail = userName
   const { error } = await resend.emails.send({
     from: FROM_ADDRESS,
     to,
-    subject: `💕 Safety Check — Please check on ${escapeHtml(displayName)}`,
+    subject: `💕 Safety Check — Please check on ${escapeHtml(subjectDisplayName)}`,
     headers: {
       'Precedence': 'bulk',
       'X-Mailer': 'Safe the Date',
@@ -271,4 +267,18 @@ function escapeHtml(str: string): string {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;')
+}
+
+function getSubjectDisplayName(userName?: string | null): string {
+  const trimmedName = userName?.trim()
+
+  if (trimmedName && !isEmailLike(trimmedName)) {
+    return trimmedName
+  }
+
+  return 'a Safe the Date user'
+}
+
+function isEmailLike(value: string): boolean {
+  return /\S+@\S+\.\S+/.test(value)
 }
